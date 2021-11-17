@@ -35,4 +35,5 @@ export interface AuthorsService {
    * @param deleteAuthorInput
    */
   deleteAuthor(deleteAuthorInput: DeleteAuthorInput): Author
+
 }

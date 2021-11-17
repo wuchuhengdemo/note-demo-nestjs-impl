@@ -8,7 +8,12 @@ import { SwaggerApiModule } from './swagger-api/swagger-api.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      autoSchemaFile: true
+      autoSchemaFile: true,
+      installSubscriptionHandlers: true,
+      subscriptions: {
+        'graphql-ws': true,
+        'subscriptions-transport-ws': true
+      }
     }),
     LocalGraphqlModel,
     SwaggerApiModule

@@ -2,7 +2,7 @@ import { AuthorsResolver } from './authors.resolver';
 import { CreateAuthorInput } from '../dto/input/create-author.input';
 import { Author } from '../models/author.model';
 import { GetAuthorsArgs } from '../dto/args/get-authors.args';
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { AuthorsServiceImpl } from '../service/authors-impl/authors.serviceImpl';
 import { GetAuthorArgs } from '../dto/args/get-author.args';
 import { Post } from '../models/post.model';
@@ -45,5 +45,10 @@ export class AuthorsResolverImpl implements AuthorsResolver{
   @Mutation(type => Author, {description: '删除作家'})
   deleteAuthor(@Args('deleteAuthorInput') deleteAuthorInput: DeleteAuthorInput): Author {
     return this.authorsServiceImpl.deleteAuthor(deleteAuthorInput)
+  }
+
+  @Subscription(returns => [Author], {name: 'authors', description: '订阅作者数列'})
+  subscriptAuthors(): AsyncIterator<Author[]> {
+    return this.authorsServiceImpl.pubSub.asyncIterator<Author[]>('authors')
   }
 }

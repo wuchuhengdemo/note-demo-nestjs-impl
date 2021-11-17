@@ -6,9 +6,15 @@ import { GetAuthorsArgs } from '../../dto/args/get-authors.args';
 import { GetAuthorArgs } from '../../dto/args/get-author.args';
 import { UpdateAuthorInput } from '../../dto/input/update-author.input';
 import { DeleteAuthorInput } from '../../dto/input/delete-author.input';
+import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()
 export class AuthorsServiceImpl implements AuthorsService{
+  get pubSub(): PubSub {
+    return this._pubSub;
+  }
+  private _pubSub: PubSub = new PubSub();
+
   get authors(): Author[] {
     return this._authors;
   }
@@ -19,10 +25,10 @@ export class AuthorsServiceImpl implements AuthorsService{
     {id: '3', name: '刘慈欣', posts: [], createdTime: new Date()},
   ];
 
-  private lastID: number;
+  private _lastID: number;
 
   constructor() {
-    this.lastID = this.authors.length;
+    this._lastID = this.authors.length;
   }
 
   /**
@@ -32,11 +38,12 @@ export class AuthorsServiceImpl implements AuthorsService{
   createAuthor(createAuthorInput: CreateAuthorInput): Author {
     const author: Author = {
       ...createAuthorInput,
-      id: `${++this.lastID }`,
+      id: `${++this._lastID }`,
       createdTime: new Date(),
       posts: []
     }
     this._authors.push(author)
+    this.pubSub.publish('authors', { authors: this.authors }).then()
 
     return author
   }
@@ -68,6 +75,7 @@ export class AuthorsServiceImpl implements AuthorsService{
   updateAuthor(updateAuthorInput: UpdateAuthorInput): Author {
     const author = this.authors.find(author => author.id === updateAuthorInput.id)
     Object.assign(author, updateAuthorInput)
+    this.pubSub.publish('authors', { authors: this.authors }).then()
 
     return author
   }
@@ -80,6 +88,7 @@ export class AuthorsServiceImpl implements AuthorsService{
     const index = this.authors.findIndex(author => author.id === deleteAuthorInput.id)
     const author = this.authors[index]
     this.authors.splice(index, 1)
+    this.pubSub.publish('authors', { authors: this.authors }).then()
 
     return author;
   }
