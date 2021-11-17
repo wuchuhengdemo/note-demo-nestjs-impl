@@ -4,21 +4,26 @@ import { CreateAuthorInput } from '../../dto/input/create-author.input';
 import { Author } from '../../models/author.model';
 import { GetAuthorsArgs } from '../../dto/args/get-authors.args';
 import { GetAuthorArgs } from '../../dto/args/get-author.args';
-import { Field, ID } from '@nestjs/graphql';
-import { Post } from '../../models/post.model';
+import { UpdateAuthorInput } from '../../dto/input/update-author.input';
+import { DeleteAuthorInput } from '../../dto/input/delete-author.input';
 
 @Injectable()
 export class AuthorsServiceImpl implements AuthorsService{
   get authors(): Author[] {
     return this._authors;
   }
-  private lastID: number = 0;
 
   private _authors: Author[] = [
     {id: '1', name: '鲁迅', posts: [], createdTime: new Date()},
     {id: '2', name: '王小波', posts: [], createdTime: new Date()},
     {id: '3', name: '刘慈欣', posts: [], createdTime: new Date()},
   ];
+
+  private lastID: number;
+
+  constructor() {
+    this.lastID = this.authors.length;
+  }
 
   /**
    * 创建一名作者
@@ -54,5 +59,28 @@ export class AuthorsServiceImpl implements AuthorsService{
    */
   getAuthor(getAuthorArgs: GetAuthorArgs): Author {
     return this.authors.find(author => author.id === getAuthorArgs.id)
+  }
+
+  /**
+   * 更新作家
+   * @param updateAuthorInput
+   */
+  updateAuthor(updateAuthorInput: UpdateAuthorInput): Author {
+    const author = this.authors.find(author => author.id === updateAuthorInput.id)
+    Object.assign(author, updateAuthorInput)
+
+    return author
+  }
+
+  /**
+   * 删除作家
+   * @param deleteAuthorInput
+   */
+  deleteAuthor(deleteAuthorInput: DeleteAuthorInput): Author {
+    const index = this.authors.findIndex(author => author.id === deleteAuthorInput.id)
+    const author = this.authors[index]
+    this.authors.splice(index, 1)
+
+    return author;
   }
 }

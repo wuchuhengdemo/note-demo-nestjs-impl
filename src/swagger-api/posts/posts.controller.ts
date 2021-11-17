@@ -1,7 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { Post } from '../../graphql/models/post.model';
 import { PostsImplService} from '../../graphql/service/posts-impl/posts-impl.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('posts')
 export class PostsController {
@@ -9,9 +9,9 @@ export class PostsController {
   }
 
   @Get('/')
+  @ApiOperation({summary: '获取全部文章'})
   @ApiResponse({
     status: 200,
-    description: '获取全部书',
     type: [Post],
   })
   getPosts(): Post[] {

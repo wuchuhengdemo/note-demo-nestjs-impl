@@ -7,6 +7,8 @@ import { AuthorsServiceImpl } from '../service/authors-impl/authors.serviceImpl'
 import { GetAuthorArgs } from '../dto/args/get-author.args';
 import { Post } from '../models/post.model';
 import { PostsImplService} from '../service/posts-impl/posts-impl.service';
+import { UpdateAuthorInput } from '../dto/input/update-author.input';
+import { DeleteAuthorInput } from '../dto/input/delete-author.input';
 
 @Resolver(of => Author)
 export class AuthorsResolverImpl implements AuthorsResolver{
@@ -33,5 +35,15 @@ export class AuthorsResolverImpl implements AuthorsResolver{
   @ResolveField('posts', returns => [Post])
   getPosts(@Parent() author: Author): Post[] {
     return this.postsImplService.getPosts({ids: [author.id]})
+  }
+
+  @Mutation(type => Author, {description: '更新作家'})
+  updateAuthor(@Args('updateAuthorInput') updateAuthorInput: UpdateAuthorInput): Author {
+    return this.authorsServiceImpl.updateAuthor(updateAuthorInput)
+  }
+
+  @Mutation(type => Author, {description: '删除作家'})
+  deleteAuthor(@Args('deleteAuthorInput') deleteAuthorInput: DeleteAuthorInput): Author {
+    return this.authorsServiceImpl.deleteAuthor(deleteAuthorInput)
   }
 }
