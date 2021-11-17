@@ -12,6 +12,10 @@ import { IsAuthorAlreadyExists} from './validators/is-author-already-exists';
     AuthorsResolverImpl,
     NovelsResolverImpl,
     IsAuthorAlreadyExists,
+  ],
+  exports: [
+    NovelImplService,
+    AuthorsServiceImpl,
   ]
 })
 export class GraphqlModule {}
