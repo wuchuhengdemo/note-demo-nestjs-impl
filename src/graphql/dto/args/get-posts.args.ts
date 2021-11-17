@@ -6,10 +6,9 @@ export class GetPostsArgs {
   @Field(
     type => [ID],
     {
-      nullable: 'items',
+      nullable: 'itemsAndList',
       description: '书id数列'
     }
   )
-  @IsNotEmpty()
-  ids: string[];
+  ids?: string[];
 }

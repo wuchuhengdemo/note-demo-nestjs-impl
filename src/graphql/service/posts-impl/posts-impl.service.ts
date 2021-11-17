@@ -65,6 +65,8 @@ export class PostsImplService implements PostsService{
   }
 
   getPosts(getPostsArgs: GetPostsArgs): Post[] {
-    return this.posts.filter(post => getPostsArgs.ids.includes(post.uid))
+    return getPostsArgs.ids?.length > 0 ?
+      this.posts.filter(post => getPostsArgs.ids.includes(post.uid))
+      : this.posts;
   }
 }
