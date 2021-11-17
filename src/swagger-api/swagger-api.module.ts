@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { NovelsController } from './novels/novels.controller';
+import { PostsController } from './posts/posts.controller';
 import { GraphqlModule } from '../graphql/graphql.module';
 import { AuthorsController } from './authors/authors.controller';
 
 @Module({
-  controllers: [NovelsController, AuthorsController],
+  controllers: [PostsController, AuthorsController],
   imports: [
     GraphqlModule
   ]

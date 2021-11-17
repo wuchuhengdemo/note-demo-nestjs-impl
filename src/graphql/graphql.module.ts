@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
-import { NovelImplService } from './service/novel-impl/novel-impl.service';
+import { PostsImplService } from './service/posts-impl/posts-impl.service';
 import { AuthorsServiceImpl } from './service/authors-impl/authors.serviceImpl';
 import { AuthorsResolverImpl } from './resolvers/authors.resolverImpl';
-import { NovelsResolverImpl } from './resolvers/novels.resolverImpl';
+import { PostsResolverImpl } from './resolvers/posts.resolverImpl';
 import { IsAuthorAlreadyExists} from './validators/is-author-already-exists';
 
 @Module({
   providers: [
-    NovelImplService,
+    PostsImplService,
     AuthorsServiceImpl,
     AuthorsResolverImpl,
-    NovelsResolverImpl,
+    PostsResolverImpl,
     IsAuthorAlreadyExists,
   ],
   exports: [
-    NovelImplService,
+    PostsImplService,
     AuthorsServiceImpl,
   ]
 })

@@ -4,7 +4,7 @@ import { CreateChapterInput } from './create-chapter.input';
 import { IsAuthorAlreadyExists } from '../../validators/is-author-already-exists';
 
 @InputType()
-export class CreateNovelInput {
+export class CreatePostInput {
   @Field({description: '小说名'})
   @IsNotEmpty()
   title: string;

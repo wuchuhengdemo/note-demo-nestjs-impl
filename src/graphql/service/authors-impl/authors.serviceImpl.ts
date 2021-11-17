@@ -5,7 +5,7 @@ import { Author } from '../../models/author.model';
 import { GetAuthorsArgs } from '../../dto/args/get-authors.args';
 import { GetAuthorArgs } from '../../dto/args/get-author.args';
 import { Field, ID } from '@nestjs/graphql';
-import { Novel } from '../../models/novel.model';
+import { Post } from '../../models/post.model';
 
 @Injectable()
 export class AuthorsServiceImpl implements AuthorsService{
@@ -15,9 +15,9 @@ export class AuthorsServiceImpl implements AuthorsService{
   private lastID: number = 0;
 
   private _authors: Author[] = [
-    {id: '1', name: '鲁迅', novels: [], createdTime: new Date()},
-    {id: '2', name: '王小波', novels: [], createdTime: new Date()},
-    {id: '3', name: '刘慈欣', novels: [], createdTime: new Date()},
+    {id: '1', name: '鲁迅', posts: [], createdTime: new Date()},
+    {id: '2', name: '王小波', posts: [], createdTime: new Date()},
+    {id: '3', name: '刘慈欣', posts: [], createdTime: new Date()},
   ];
 
   /**
@@ -29,7 +29,7 @@ export class AuthorsServiceImpl implements AuthorsService{
       ...createAuthorInput,
       id: `${++this.lastID }`,
       createdTime: new Date(),
-      novels: []
+      posts: []
     }
     this._authors.push(author)
 

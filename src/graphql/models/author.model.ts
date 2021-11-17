@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Novel } from './novel.model';
+import { Post } from './post.model';
 
 @ObjectType()
 export class Author {
@@ -9,8 +9,8 @@ export class Author {
   @Field()
   name: string;
 
-  @Field(type => [Novel], {nullable: 'items', description: '作者名下的小说'})
-  novels: Novel[]
+  @Field(type => [Post], {nullable: 'items', description: '作者名下的小说'})
+  posts: Post[]
 
   @Field({description: '创建时间'})
   createdTime: Date

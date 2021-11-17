@@ -5,14 +5,14 @@ import { GetAuthorsArgs } from '../dto/args/get-authors.args';
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AuthorsServiceImpl } from '../service/authors-impl/authors.serviceImpl';
 import { GetAuthorArgs } from '../dto/args/get-author.args';
-import { Novel } from '../models/novel.model';
-import { NovelImplService} from '../service/novel-impl/novel-impl.service';
+import { Post } from '../models/post.model';
+import { PostsImplService} from '../service/posts-impl/posts-impl.service';
 
 @Resolver(of => Author)
 export class AuthorsResolverImpl implements AuthorsResolver{
   constructor(
     private readonly authorsServiceImpl: AuthorsServiceImpl,
-    private readonly novelsImplService: NovelImplService
+    private readonly postsImplService: PostsImplService
     ) { }
 
   @Query(type => [Author], {description: '获取作者数列', name: 'authors'})
@@ -30,8 +30,8 @@ export class AuthorsResolverImpl implements AuthorsResolver{
     return this.authorsServiceImpl.getAuthor(getAuthorArgs)
   }
 
-  @ResolveField('novels', returns => [Novel])
-  getNovels(@Parent() author: Author): Novel[] {
-    return this.novelsImplService.getNovels({ids: [author.id]})
+  @ResolveField('posts', returns => [Post])
+  getPosts(@Parent() author: Author): Post[] {
+    return this.postsImplService.getPosts({ids: [author.id]})
   }
 }

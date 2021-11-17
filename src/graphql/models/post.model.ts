@@ -8,7 +8,7 @@ interface ConstructProps {
   id: string;
 }
 @ObjectType()
-export class Novel {
+export class Post {
   constructor({uid, title, id, chapters}: ConstructProps) {
     this.uid = uid;
     this.title = title;
