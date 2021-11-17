@@ -2,8 +2,8 @@
 pnpm build
 
 project=wuchuheng/note-demo
-version=nestjs-01
+version=introduceGraphqlDemo
 docker build . -t $project:$version
 docker tag $project:$version $project:$version
-#docker push $project:$version
+docker push $project:$version
 
